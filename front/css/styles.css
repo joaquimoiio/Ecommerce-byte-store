@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+header {
+    background-color: #f8f9fa;
+    padding: 1px 1px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.container- fluid {
+    text-align: center !important;
+    width: 5000px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 10px 20px;
+}
+
+.pesquisa {
+    margin-left: 32.5%;
+    width: 35%;
+}
+
+.btn-outline-success {
+    --bs-btn-color: #4088f4 !important;
+    --bs-btn-border-color: #4088f4 !important;
+    --bs-btn-hover-bg: #4088f4 !important;
+    --bs-btn-hover-border-color: #4088f4 !important;
+    --bs-btn-active-bg: #4088f4 !important;
+}
+
+.icons {
+    position: relative;
+    left: -5%;
+    gap: 20%;
+    align-items: center;
+    padding-left:  200px; ;
+}
+
+.icons a {
+    text-decoration: none;
+    font-size: 200%;
+    color: #4088f4;
+}
+
+.icons a:hover {
+    color: gray;
+}
+
+/*/.login-btn {
+    font-size: 100% !important;
+    padding: 5px 15px;
+    border: 1px solid #4088f4;
+    border-radius: 10%;
+    transition: all 0.3s ease;
+    margin-top: 6%;         
+}/*/
+
+/*/.login-btn:hover {
+    background-color: #4088f4;
+    color: white !important;
+} /*/
+
+.nav-links {
+    background-color: #f8f9fa;
+    width: 100% !important;
+    font-weight: 30% !important;
+    border-collapse: collapse !important;
+
+}
+
+.select-container {
+    text-align: left !important;
+    width: 20% !important;
+
+}
+
+
+.form-select {
+    color: #4088f4 !important;
+    display: inline-block !important;
+    max-width: 50% !important;
+    width: 100% !important;
+    font-weight: 40% !important;
+    margin-left: 2%;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='black' d='M3 6h14v2H3zm0 4h14v2H3zm0 4h14v2H3z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 5% center !important;
+    background-size: 10% !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.form-select:hover {
+    background-color: rgba(200, 200, 200, 0.3) !important;
+}
+
+.links-container {
+    text-align: center;
+}
+
+.nav-links a {
+    color: #4088f4;
+    padding: 1%;
+    text-decoration: none;
+    position: relative;
+    font-size: 17.5px;
+    left: -15%;
+}
+
+.azul{
+    width: 100%;
+    border: 1px solid #4088f4;
+    background-color: #4088f4;
+    height: 14px !important;
+}
+
+
+.theme-toggle-icon, .cart-icon, .profile-icon,.login-btn{
+    padding: 10px;
+}
