@@ -1,17 +1,17 @@
-var radio = document.querySelector('.manual-btn')
-var cont = 1
-document.getElementById('radio1').checked = true
-9
-setInterval(() => {
-    proximaImg()
-}, 5000)
+document.addEventListener("DOMContentLoaded", function () {
+    const profileMenuToggle = document.getElementById("profileMenuToggle");
+    const profileMenu = document.getElementById("profileMenu");
 
-function proximaImg(){
-    cont++ 
+    profileMenuToggle.addEventListener("click", function (event) {
+        event.preventDefault();
+        profileMenu.style.display = profileMenu.style.display === "block" ? "none" : "block";
+    });
 
-    if(cont > 3){
-        cont = 1
-    }
+    document.addEventListener("click", function (event) {
+        if (!profileMenuToggle.contains(event.target) && !profileMenu.contains(event.target)) {
+            profileMenu.style.display = "none";
+        }
+    });
+});
 
-    document.getElementById('radio'+ cont).checked = true
-}
+
