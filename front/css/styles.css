@@ -16,15 +16,20 @@ header {
 
 .container-fluid {
     text-align: center !important;
-    width: 5000px !important;
+    width: 100% !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 1px !important;
 }
 
 .pesquisa {
     margin-left: 32.5%;
     width: 35%;
+    display: inline !important;
+
+}
+.aciona{
+    margin-top: 10px;
+    display: inline !important;
 }
 
 .btn-outline-success {
@@ -55,6 +60,7 @@ header {
 
 .profile-icon {
     position: relative;
+    padding-right: 20px !important;
 }
 
 .profile-icon .dropdown-menu {
@@ -173,3 +179,46 @@ header {
     padding: 10px;
 }
 
+.carousel-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    background-color: #777;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+}
+
+.carousel-container button {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 100;
+}
+
+button.prev {
+    left: 10px;
+    transform: translateY(-50%);
+}
+
+button.next {
+    right: 10px;
+    transform: translateY(-50%);
+}
