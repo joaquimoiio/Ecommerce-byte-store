@@ -19,7 +19,7 @@ header {
     width: 5000px !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 10px 20px;
+    padding: 1px !important;
 }
 
 .pesquisa {
