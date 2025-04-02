@@ -10,8 +10,8 @@ header {
 }
 
 .navbar{
-    padding-top: 0.1px !important;
-    padding-bottom: 0.1px !important;
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
 }
 
 .container-fluid {
@@ -26,10 +26,6 @@ header {
     width: 35%;
     display: inline !important;
 
-}
-.aciona{
-    margin-top: 10px;
-    display: inline !important;
 }
 
 .btn-outline-success {
@@ -122,11 +118,20 @@ header {
 
 }
 
+.nav-links a {
+    color: #4088f4;
+    padding: 1%;
+    text-decoration: none;
+    position: relative;
+    font-size: 17.5px;
+    left: -15%;
+}
+
 .select-container {
     text-align: left !important;
     width: 20% !important;
-
 }
+
 
 
 .form-select {
@@ -158,14 +163,6 @@ header {
     text-align: center;
 }
 
-.nav-links a {
-    color: #4088f4;
-    padding: 1%;
-    text-decoration: none;
-    position: relative;
-    font-size: 17.5px;
-    left: -15%;
-}
 
 .azul{
     width: 100%;
@@ -193,7 +190,7 @@ header {
 
 .carousel-slide {
     min-width: 100%;
-    background-color: #777;
+    background-color: #4088f4;
     color: white;
     display: flex;
     justify-content: center;
