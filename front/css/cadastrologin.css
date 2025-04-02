@@ -1,0 +1,205 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f9ff;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-fluid {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
+}
+
+.container-fluid {
+    text-align: center !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+}
+
+.icons {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.icons a {
+    text-decoration: none;
+    font-size: 23px;
+    color: #4088f4;
+}
+
+.icons a:hover {
+    color: gray;
+}
+
+.btn-outline-success {
+    --bs-btn-color: #4088f4 !important;
+    --bs-btn-border-color: #4088f4 !important;
+    --bs-btn-hover-bg: #4088f4 !important;
+    --bs-btn-hover-border-color: #4088f4 !important;
+    --bs-btn-active-bg: #4088f4 !important;
+}
+
+.pesquisa {
+    margin-left: 32.5%;
+    width: 35%;
+    display: inline !important;
+}
+
+.nav-links {
+    background-color: #f8f9fa;
+    width: 100% !important;
+    font-weight: 30% !important;
+    border-collapse: collapse !important;
+}
+
+.nav-links a {
+    color: #4088f4;
+    padding: 1%;
+    text-decoration: none;
+    position: relative;
+    font-size: 17.5px;
+    left: -15%;
+}
+
+.select-container {
+    text-align: left !important;
+    width: 20% !important;
+}
+
+.form-select {
+    color: #4088f4 !important;
+    display: inline-block !important;
+    max-width: 50% !important;
+    width: 100% !important;
+    font-weight: 40% !important;
+    margin-left: 5%;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='black' d='M3 6h14v2H3zm0 4h14v2H3zm0 4h14v2H3z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 5% center !important;
+    background-size: 10% !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.form-select:hover {
+    background-color: rgba(200, 200, 200, 0.3) !important;
+}
+
+.links-container {
+    text-align: center;
+}
+
+.azul {
+    width: 100%;
+    border: 1px solid #4088f4;
+    background-color: #4088f4;
+    height: 10px !important;
+}
+
+.invisivel {
+    padding: 10px !important;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 33%;
+    min-width: 320px;
+    max-width: 480px;
+    text-align: center;
+    border: 3px solid #3b72dc;
+    margin: 0 auto;
+}
+
+.container h2 {
+    color: #3b72dc;
+    margin-bottom: 10px;
+}
+
+.container p {
+    color: #3b72dc;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.container-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #3b72dc;
+    border-radius: 10px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #4088f4;
+    background-color: #e6f0ff;
+    box-shadow: 0 0 5px rgba(72, 139, 255, 0.5);
+}
+
+.form-group input:active {
+    transform: scale(1.05);
+    transition: all 0.1s ease;
+}
+
+.botao {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #4088f4;
+}
+
+.botao:hover {
+    transform: scale(1.01);
+    background-color: #2d64b3;
+    color: #fff;
+  }
+
+
+.botao .primary {
+    background-color: #3b72dc ;
+    color: #fff ;
+}
+
+.botão .secondary {
+    background-color: #7da9ff ;
+    color: #fff ;
+}
+
+#DataTelefone{
+    display: flex; gap: 10px;
+}
+
+#Data{
+    flex: 1;
+}
+
+#Telefone{
+    flex: 1;
+}
