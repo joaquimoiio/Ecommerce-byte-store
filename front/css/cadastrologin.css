@@ -1,14 +1,19 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f9ff;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
+
+header {
+    background-color: #f8f9fa;
+    padding: 1px 1px;
+    align-items: center;
+    justify-content: space-between;
+}
+
 
 .container-fluid {
     padding-top: 1px !important;
     padding-bottom: 1px !important;
+    background-color: #f8f9fa !important;
 }
 
 .container-fluid {
@@ -50,7 +55,7 @@ body {
 }
 
 .nav-links {
-    background-color: #f8f9fa;
+    background-color: #fff;
     width: 100% !important;
     font-weight: 30% !important;
     border-collapse: collapse !important;
@@ -111,7 +116,7 @@ body {
 }
 
 .container {
-    background-color: #ffffff;
+    background-color: #fff;
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -119,17 +124,17 @@ body {
     min-width: 320px;
     max-width: 480px;
     text-align: center;
-    border: 3px solid #3b72dc;
+    border: 3px solid #4088f4;
     margin: 0 auto;
 }
 
 .container h2 {
-    color: #3b72dc;
+    color: #4088f4;
     margin-bottom: 10px;
 }
 
 .container p {
-    color: #3b72dc;
+    color: #4088f4;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -147,14 +152,14 @@ body {
 .form-group input {
     width: 100%;
     padding: 10px;
-    border: 2px solid #3b72dc;
+    border: 2px solid #4088f4;
     border-radius: 10px;
     outline: none;
 }
 
 .form-group input:focus {
     border-color: #4088f4;
-    background-color: #e6f0ff;
+    background-color: #fff;
     box-shadow: 0 0 5px rgba(72, 139, 255, 0.5);
 }
 
@@ -177,20 +182,16 @@ body {
 
 .botao:hover {
     transform: scale(1.01);
-    background-color: #2d64b3;
+    background-color: #3677D6;
     color: #fff;
   }
 
 
-.botao .primary {
-    background-color: #3b72dc ;
+.botao .primary , .botão .secondary {
+    background-color: #4088f4 ;
     color: #fff ;
 }
 
-.botão .secondary {
-    background-color: #7da9ff ;
-    color: #fff ;
-}
 
 #DataTelefone{
     display: flex; gap: 10px;

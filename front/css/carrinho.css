@@ -236,7 +236,7 @@ h2 {
 }
 
 .quantity button {
-    background-color: #4677E0;
+    background-color: #4088f4;
     color: white;
     border: none;
     padding: 10px 14px;
@@ -247,7 +247,7 @@ h2 {
 
 .summary {
     width: 35%;
-    background-color: #eff3ff;
+    background-color: #fff;
     padding: 25px;
     border-radius: 15px;
     border: 3px solid #4677E0;
