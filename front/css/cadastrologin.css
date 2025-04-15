@@ -9,11 +9,9 @@ header {
     justify-content: space-between;
 }
 
-
-.container-fluid {
+.navbar{
     padding-top: 1px !important;
     padding-bottom: 1px !important;
-    background-color: #f8f9fa !important;
 }
 
 .container-fluid {
@@ -21,6 +19,21 @@ header {
     width: 100% !important;
     justify-content: space-between !important;
     align-items: center !important;
+}
+
+.pesquisa {
+    margin-left: 32.5%;
+    width: 35%;
+    display: inline !important;
+
+}
+
+.btn-outline-success {
+    --bs-btn-color: #4088f4 !important;
+    --bs-btn-border-color: #4088f4 !important;
+    --bs-btn-hover-bg: #4088f4 !important;
+    --bs-btn-hover-border-color: #4088f4 !important;
+    --bs-btn-active-bg: #4088f4 !important;
 }
 
 .icons {
@@ -40,25 +53,54 @@ header {
     color: gray;
 }
 
-.btn-outline-success {
-    --bs-btn-color: #4088f4 !important;
-    --bs-btn-border-color: #4088f4 !important;
-    --bs-btn-hover-bg: #4088f4 !important;
-    --bs-btn-hover-border-color: #4088f4 !important;
-    --bs-btn-active-bg: #4088f4 !important;
+
+.profile-icon {
+    position: relative;
+    padding-right: 20px !important;
 }
 
-.pesquisa {
-    margin-left: 32.5%;
-    width: 35%;
-    display: inline !important;
+.profile-icon .dropdown-menu {
+    font-size: 12px;
+    padding: 5px 10px;
+    width: auto;
+    min-width: 120px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon .dropdown-item {
+    padding: 5px 10px;
+}
+
+.profile-icon .dropdown-item:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon .dropdown-menu {
+    position: absolute;
+    right: 0;
+}
+
+.profile-icon .dropdown-menu {
+    font-size: 10px;
+    padding: 5px 10px;
+    width: auto;
+    min-width: 120px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-icon .dropdown-item {
+    font-size: 10px;
+    padding: 5px 10px;
 }
 
 .nav-links {
-    background-color: #fff;
+    background-color: #f8f9fa;
     width: 100% !important;
     font-weight: 30% !important;
     border-collapse: collapse !important;
+
 }
 
 .nav-links a {
@@ -74,6 +116,8 @@ header {
     text-align: left !important;
     width: 20% !important;
 }
+
+
 
 .form-select {
     color: #4088f4 !important;
@@ -104,7 +148,11 @@ header {
     text-align: center;
 }
 
-.azul {
+.theme-toggle-icon, .cart-icon, .profile-icon,.login-btn{
+    padding: 10px;
+}
+
+.azul{
     width: 100%;
     border: 1px solid #4088f4;
     background-color: #4088f4;
