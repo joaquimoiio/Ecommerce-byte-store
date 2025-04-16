@@ -208,7 +208,6 @@ header {
 .form-group input:focus {
     border-color: #4088f4;
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(72, 139, 255, 0.5);
 }
 
 .form-group input:active {
@@ -245,10 +244,10 @@ header {
     display: flex; gap: 10px;
 }
 
-#Data{
+#date{
     flex: 1;
 }
 
-#Telefone{
+#telefone{
     flex: 1;
 }
