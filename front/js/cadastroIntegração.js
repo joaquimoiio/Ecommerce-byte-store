@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:3306/cliente'
+const apiUrl = 'http://localhost:8081/cliente'
 
 document.getElementById('sendDataBtn').addEventListener('click',function(){
     const idCliente = document.getElementById('idCliente').value;

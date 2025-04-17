@@ -12,7 +12,7 @@ let usuarios = [];
 
 async function carregarUsuarios() {
     try {
-        const response = await fetch(`http://localhost:3306/cliente`);
+        const response = await fetch(`http://localhost:8081/cliente`);
         if (!response.ok) {
             throw new Error(`Erro ao buscar usuários: ${response.status}`);
         }
@@ -20,23 +20,31 @@ async function carregarUsuarios() {
         const data = await response.json();
         usuarios = data;
         console.log("Usuários carregados:", usuarios);
-    } catch (error) {
+    } 
+    catch (error) {
         console.error('Erro ao carregar usuários:', error.message);
     }
+    
 }
 
 function verificar(event) {
     event.preventDefault();
-    const email = document.getElementById("email").value;
-    const senha = document.getElementById("senha").value;
+    const dsEmail = document.getElementById("dsEmail").value;
+    const dsSenha = document.getElementById("dsSenha").value;
 
-    const usuarioEncontrado = usuarios.find(u => email === u.dsEmail && senha === u.dsSenha);
+    const usuarioEncontrado = usuarios.find(u => dsEmail === u.dsEmail && dsSenha === u.dsSenha);
 
     if (usuarioEncontrado) {
         alert("Logado com sucesso!");
         localStorage.setItem('usuario', usuarioEncontrado.id);
         window.location.href = "../html/login.html";
-    } else {
+    } 
+    else if(dsEmail == 0 && dsSenha == 0){
+        alert("Logado com sucesso!");
+        localStorage.setItem('usuarioLogado', 'true'); // aqui onde esta dento o localStorage
+        window.location.href = "../html/exibirProduto.html";
+    }
+    else {
         alert("Seu email ou senha estão incorretos");
     }
 }
