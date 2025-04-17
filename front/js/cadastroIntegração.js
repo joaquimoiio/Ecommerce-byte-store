@@ -1,42 +1,42 @@
 const apiUrl = 'http://localhost:8081/cliente'
 
-document.getElementById('sendDataBtn').addEventListener('click',function(){
-    const idCliente = document.getElementById('idCliente').value;
-    const nuCpf = document.getElementById('vlProduto').value;
+document.getElementById('sendDataBtn').addEventListener('click', function (e) {
+    const nmCliente = document.getElementById('nmCliente').value;
+    const nuCpf = document.getElementById('nuCpf').value;
     const dsEmail = document.getElementById('dsEmail').value;
-    const dsSenha = document.getElementById('dsSenha').value;
+    const dsNascimento = document.getElementById('dsNascimento').value;
     const nuTelefone = document.getElementById('nuTelefone').value;
+    const dsSenha = document.getElementById('dsSenha').value;
 
-    if (idCliente && nuCpf && dsEmail && dsSenha && nuTelefone){
-        const payload = {
-            idCliente: parseInt(idCliente),
-            nuCpf: parseInt(nuCpf,11),
-            dsEmail: dsEmail,
-            dsSenha: dsSenha,
-            nuTelefone: nuTelefone
-        };
 
-        fetch(apiUrl,{
-            method: 'POST',
-            headers:{
-                'Content-Type':'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(response =>{
-            if(!response.ok){
-                throw new Error(`Erro ao enviar dados: ${response.status}`);
+
+    const payload = {
+        nmCliente: nmCliente,
+        nuCpf: nuCpf,
+        dsEmail: dsEmail,
+        dsNascimento: dsNascimento,
+        nuTelefone: nuTelefone,
+        dsSenha: dsSenha
+    };
+
+    fetch('http://localhost:8080/cliente', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(err => {
+                    alert('Erro: ' + err.message);
+                });
             }
-            return response.json();
+            alert('Conta criada com sucesso!');
+            window.location.href = '../html/exibirProduto.html'; // Redireciona para a página de login após sucesso
         })
-        .then(data =>{
-            alert('Dados enviados com sucesso!');
-            console.log('Responde da API>',data);
-        })
-        .catch(error =>{
-            alert(`Erro: ${error.message}`);
+        .catch(error => {
+            console.error('Erro ao criar conta:', error);
+            alert('Erro ao criar conta');
         });
-    }else {
-        alert('Por favor, preencha todos os todos os campos.')
-    }
 });

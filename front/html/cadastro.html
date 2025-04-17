@@ -12,46 +12,8 @@
 </head>
 
 <body>
-    <header>
-        <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-                <div class="pesquisa">
-                    <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
-                </div>
-                <div class="icons">
-                    <a href="#" class="theme-toggle-icon" title="Alternar tema">
-                        <i class="bi bi-sun"></i>
-                    </a>
-                </div>
-            </div>
-        </nav>
-    </header>
 
-    <section>
-        <table class="nav-links">
-            <tr>
-                <td class="select-container">
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Categoria</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                    </select>
-                </td>
-                <td class="links-container">
-                    <a class="navs" href="#">Promoções</a>
-                    <a class="navs" href="#">PC Gamer</a>
-                    <a class="navs" href="#">Notebook</a>
-                    <a class="navs" href="#">Atendimento</a>
-                </td>
-            </tr>
-        </table>
-    </section>
-
-    <section class="azul">ㅤ</section>
+    <div id="meu-header"></div>
 
     <section class="invisivel">
         <div class="container-wrapper">
@@ -59,26 +21,26 @@
                 <h2>Crie sua conta</h2>
 
                 <div class="form-group">
-                    <input type="text" placeholder="Nome Completo" />
+                    <input type="text" id="nmCliente" placeholder="Nome Completo" />
                 </div>
                 <div class="form-group">
-                    <input type="text" id="cpf" placeholder="CPF" />
+                    <input type="text" id="nuCpf" placeholder="CPF" />
                 </div>
                 <div class="form-group">
-                    <input type="email" id="email" placeholder="E-mail" />
+                    <input type="email" id="dsEmail" placeholder="E-mail" />
                 </div>
-                <div class="form-group" id ="DataTelefone">
-                    <input type="text" id="date" placeholder="Data de Nascimento"  />
-                    <input type="text" id="telefone" placeholder="Número de Telefone"  />
+                <div class="form-group" id="DataTelefone">
+                    <input type="text" id="dsNascimento" placeholder="Data de Nascimento" />
+                    <input type="text" id="nuTelefone" placeholder="Número de Telefone" />
                 </div>
                 <div class="form-group">
-                    <input type="password" id="senha" placeholder="Senha" />
+                    <input type="password" id="dsSenha" placeholder="Senha" />
                 </div>
                 <div class="form-group">
                     <input type="password" id="senhaconfirma" placeholder="Digite novamente sua senha" />
                 </div>
 
-                <a href="#"><button class="botao primary">Criar Conta</button></a>
+                <button id="sendDataBtn" class="botao primary">Criar Conta</button>
                 <a href="login.html"><button class="botao secondary">Entrar</button></a>
             </div>
         </div>
