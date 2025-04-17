@@ -1,0 +1,93 @@
+
+.invisivel {
+    padding: 10px !important;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 33%;
+    min-width: 320px;
+    max-width: 480px;
+    text-align: center;
+    border: 3px solid #4088f4;
+    margin: 0 auto;
+}
+
+.container h2 {
+    color: #4088f4;
+    margin-bottom: 10px;
+}
+
+.container p {
+    color: #4088f4;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.container-wrapper {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #4088f4;
+    border-radius: 10px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #4088f4;
+    background-color: #fff;
+}
+
+.form-group input:active {
+    transform: scale(1.05);
+    transition: all 0.1s ease;
+}
+
+.botao {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #4088f4;
+}
+
+.botao:hover {
+    transform: scale(1.01);
+    background-color: #3677D6;
+    color: #fff;
+  }
+
+
+.botao .primary , .botão .secondary {
+    background-color: #4088f4 ;
+    color: #fff ;
+}
+
+
+#DataTelefone{
+    display: flex; gap: 10px;
+}
+
+#date{
+    flex: 1;
+}
+
+#telefone{
+    flex: 1;
+}
