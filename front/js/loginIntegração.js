@@ -12,7 +12,7 @@ let usuarios = [];
 
 async function carregarUsuarios() {
     try {
-        const response = await fetch(`http://localhost:8081/cliente`);
+        const response = await fetch(`http://localhost:8080/cliente`);
         if (!response.ok) {
             throw new Error(`Erro ao buscar usuários: ${response.status}`);
         }
@@ -39,11 +39,6 @@ function verificar(event) {
         localStorage.setItem('usuario', usuarioEncontrado.id);
         window.location.href = "../html/login.html";
     } 
-    else if(dsEmail == 0 && dsSenha == 0){
-        alert("Logado com sucesso!");
-        localStorage.setItem('usuarioLogado', 'true'); // aqui onde esta dento o localStorage
-        window.location.href = "../html/exibirProduto.html";
-    }
     else {
         alert("Seu email ou senha estão incorretos");
     }
