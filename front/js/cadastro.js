@@ -41,3 +41,4 @@ document.getElementById('sendDataBtn').addEventListener('click', function (e) {
             alert('Erro ao criar conta: ' + (error.message || 'Verifique os dados inseridos'));
         });
 });
+

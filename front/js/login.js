@@ -19,7 +19,7 @@ async function carregarUsuarios() {
 
         const data = await response.json();
         usuarios = data;
-        console.log("Usuários carregados:", usuarios);
+        //console.log("Usuários carregados:", usuarios);
     } 
     catch (error) {
         console.error('Erro ao carregar usuários:', error.message);
