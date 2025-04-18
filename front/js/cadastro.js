@@ -34,11 +34,10 @@ document.getElementById('sendDataBtn').addEventListener('click', function (e) {
         })
         .then(data => {
             alert('Conta criada com sucesso!');
-            window.location.href = '../html/exibirProduto.html';
+            window.location.href = 'login.html'; // Redirecionando para login.html em vez de exibirProduto.html
         })
         .catch(error => {
             console.error('Erro ao criar conta:', error);
             alert('Erro ao criar conta: ' + (error.message || 'Verifique os dados inseridos'));
         });
 });
-

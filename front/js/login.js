@@ -19,12 +19,10 @@ async function carregarUsuarios() {
 
         const data = await response.json();
         usuarios = data;
-        //console.log("Usuários carregados:", usuarios);
     } 
     catch (error) {
         console.error('Erro ao carregar usuários:', error.message);
     }
-    
 }
 
 function verificar(event) {
@@ -36,8 +34,12 @@ function verificar(event) {
 
     if (usuarioEncontrado) {
         alert("Logado com sucesso!");
+        // Armazenar informações do usuário e status de login
         localStorage.setItem('usuario', usuarioEncontrado.id);
-        window.location.href = "../html/login.html";
+        localStorage.setItem('isLoggedIn', 'true');
+        
+        // Redirecionar para a página principal
+        window.location.href = "exibirProduto.html";
     } 
     else {
         alert("Seu email ou senha estão incorretos");
