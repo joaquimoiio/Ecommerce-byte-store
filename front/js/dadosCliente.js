@@ -1,9 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Recuperar ID do cliente do localStorage (presumindo que você o armazena após login)
-    const clienteId = localStorage.getItem('clienteId');
+    console.log("Página dadosCliente carregada");
+    
+    const clienteId = localStorage.getItem('usuario');
+    console.log("ID do usuário recuperado:", clienteId);
     
     if (!clienteId) {
-        // Redirecionar para login se não estiver autenticado
+        console.error("Nenhum ID de usuário encontrado no localStorage");
+        alert("Você precisa estar logado para acessar esta página.");
         window.location.href = 'login.html';
         return;
     }
@@ -22,43 +25,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Função para carregar os dados atuais do cliente
 function carregarDadosCliente(id) {
-    fetch(`http://localhost:8080/cliente/${id}`, {
+    console.log("Tentando carregar dados do cliente ID:", id);
+    
+    // URL completa para debug
+    const url = `http://localhost:8080/cliente/${id}`;
+    console.log("URL da requisição:", url);
+    
+    fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         }
     })
     .then(response => {
+        console.log("Status da resposta:", response.status);
+        
         if (!response.ok) {
-            throw new Error('Cliente não encontrado');
+            throw new Error(`Cliente não encontrado. Status: ${response.status}`);
         }
         return response.json();
     })
     .then(cliente => {
+        console.log("Dados do cliente recebidos:", cliente);
+        
         // Preencher o formulário com os dados do cliente
-        document.getElementById('nome').value = cliente.nmCliente || '';
-        document.getElementById('nascimento').value = cliente.dtNasc || '';
-        document.getElementById('cpf').value = cliente.nuCpf || '';
-        document.getElementById('telefone').value = cliente.nuTelefone || '';
-        document.getElementById('email').value = cliente.dsEmail || '';
+        document.getElementById('nmCliente').value = cliente.nmCliente || '';
+        
+        // Formatar data para o formato yyyy-MM-dd para o input date
+        if (cliente.dtNasc) {
+            try {
+                const data = new Date(cliente.dtNasc);
+                const dataFormatada = data.toISOString().split('T')[0];
+                document.getElementById('dtNasc').value = dataFormatada;
+                console.log("Data formatada:", dataFormatada);
+            } catch (error) {
+                console.error("Erro ao formatar data:", error);
+                document.getElementById('dtNasc').value = cliente.dtNasc;
+            }
+        }
+        
+        document.getElementById('nuCpf').value = cliente.nuCpf || '';
+        document.getElementById('nuTelefone').value = cliente.nuTelefone || '';
+        document.getElementById('dsEmail').value = cliente.dsEmail || '';
+        
+        console.log("Formulário preenchido com sucesso");
     })
     .catch(error => {
         console.error('Erro ao carregar dados do cliente:', error);
-        exibirMensagem('Erro ao carregar dados. Por favor, tente novamente.', 'error');
+        alert(`Erro ao carregar dados: ${error.message}`);
     });
 }
 
 // Função para atualizar os dados do cliente
 function atualizarDadosCliente(id) {
-    const nome = document.getElementById('nome').value;
-    const dataNascimento = document.getElementById('nascimento').value;
-    const cpf = document.getElementById('cpf').value;
-    const telefone = document.getElementById('telefone').value;
-    const email = document.getElementById('email').value;
+    console.log("Tentando atualizar dados do cliente ID:", id);
+    
+    const nmCliente = document.getElementById('nmCliente').value;
+    const dtNasc = document.getElementById('dtNasc').value;
+    const nuCpf = document.getElementById('nuCpf').value;
+    const nuTelefone = document.getElementById('nuTelefone').value;
+    const dsEmail = document.getElementById('dsEmail').value;
     
     // Validação básica
-    if (!nome || !dataNascimento || !cpf || !telefone || !email) {
-        exibirMensagem('Por favor, preencha todos os campos obrigatórios.', 'error');
+    if (!nmCliente || !dtNasc || !nuCpf || !nuTelefone || !dsEmail) {
+        alert('Por favor, preencha todos os campos obrigatórios.');
         return;
     }
     
@@ -71,19 +101,23 @@ function atualizarDadosCliente(id) {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Cliente não encontrado');
+            throw new Error(`Cliente não encontrado. Status: ${response.status}`);
         }
         return response.json();
     })
     .then(cliente => {
+        console.log("Dados atuais recuperados para atualização");
+        
         const dadosAtualizados = {
-            nmCliente: nome,
-            dtNasc: dataNascimento,
-            nuCpf: cpf,
-            nuTelefone: telefone,
-            dsEmail: email,
+            nmCliente: nmCliente,
+            dtNasc: dtNasc,
+            nuCpf: nuCpf,
+            nuTelefone: nuTelefone,
+            dsEmail: dsEmail,
             dsSenha: cliente.dsSenha // Preservar a senha atual
         };
+        
+        console.log("Dados a serem enviados:", dadosAtualizados);
         
         return fetch(`http://localhost:8080/cliente/${id}`, {
             method: 'PUT',
@@ -94,39 +128,19 @@ function atualizarDadosCliente(id) {
         });
     })
     .then(response => {
+        console.log("Status da resposta de atualização:", response.status);
+        
         if (!response.ok) {
-            throw new Error('Erro ao atualizar dados');
+            throw new Error(`Erro ao atualizar dados. Status: ${response.status}`);
         }
         return response.json();
     })
     .then(data => {
-        exibirMensagem('Dados atualizados com sucesso!', 'success');
+        console.log("Atualização bem-sucedida:", data);
+        alert('Dados atualizados com sucesso!');
     })
     .catch(error => {
         console.error('Erro ao atualizar dados:', error);
-        exibirMensagem('Erro ao atualizar dados. Por favor, tente novamente.', 'error');
+        alert(`Erro ao atualizar dados: ${error.message}`);
     });
-}
-
-// Função para exibir mensagens ao usuário
-function exibirMensagem(texto, tipo) {
-    // Verificar se já existe uma mensagem
-    let mensagemExistente = document.querySelector('.mensagem-feedback');
-    if (mensagemExistente) {
-        mensagemExistente.remove();
-    }
-    
-    // Criar elemento de mensagem
-    const mensagem = document.createElement('div');
-    mensagem.classList.add('mensagem-feedback', tipo);
-    mensagem.textContent = texto;
-    
-    // Adicionar ao DOM
-    const form = document.querySelector('.form');
-    form.parentNode.insertBefore(mensagem, form);
-    
-    // Remover após alguns segundos
-    setTimeout(() => {
-        mensagem.remove();
-    }, 3000);
 }
