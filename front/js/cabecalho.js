@@ -18,6 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
             // Setup cart link functionality (both for logged in and logged out users)
             setupCartFunctionality();
             
+            // Carregar o script de pesquisa se não existir
+            if (!document.querySelector('script[src*="search.js"]')) {
+                const searchScript = document.createElement('script');
+                searchScript.src = '../js/search.js';
+                document.body.appendChild(searchScript);
+            }
+            
+            // Carregamento do bootstrap se necessário
             if (!document.querySelector('script[src*="bootstrap.bundle.min.js"]')) {
                 const bootstrapScript = document.createElement('script');
                 bootstrapScript.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
@@ -72,6 +80,42 @@ function setupPerfilFunctionality() {
             console.log("Funcionalidade de perfil configurada");
         } else {
             console.warn("Link de perfil não encontrado");
+        }
+        
+        // Configurar também o link de segurança da conta
+        const segurancaLink = document.querySelector('a[href="segurancaConta.html"]');
+        if (segurancaLink) {
+            segurancaLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const usuarioLogado = localStorage.getItem('usuario');
+                if (usuarioLogado) {
+                    window.location.href = "segurancaConta.html";
+                } else {
+                    alert("Você precisa estar logado para acessar a segurança da conta.");
+                    window.location.href = "login.html";
+                }
+            });
+            console.log("Funcionalidade de segurança da conta configurada");
+        } else {
+            console.warn("Link de segurança da conta não encontrado");
+        }
+        
+        // Configurar o link de histórico
+        const historicoLink = document.querySelector('a[href="historico.html"]');
+        if (historicoLink) {
+            historicoLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const usuarioLogado = localStorage.getItem('usuario');
+                if (usuarioLogado) {
+                    window.location.href = "historico.html";
+                } else {
+                    alert("Você precisa estar logado para acessar seu histórico de compras.");
+                    window.location.href = "login.html";
+                }
+            });
+            console.log("Funcionalidade de histórico configurada");
         }
     }, 100);
 }

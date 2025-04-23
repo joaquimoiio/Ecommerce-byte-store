@@ -309,3 +309,79 @@ button.next {
     justify-content: center;
     gap: 5px;
 }
+
+.produto-card {
+    border: 3px solid #4088f4;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 30px;
+    background-color: white;
+}
+
+.produto-nome {
+    font-size: 28px;
+    color: #4088f4;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.produto-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.produto-preco {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.produto-descricao {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.produto-acoes {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 300px;
+}
+
+.quantidade-selector {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.btn-comprar {
+    background-color: #4088f4;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-carrinho {
+    background-color: white;
+    color: #4088f4;
+    border: 2px solid #4088f4;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-comprar:hover {
+    background-color: #3677d9;
+}
+
+.btn-carrinho:hover {
+    background-color: #f0f8ff;
+}

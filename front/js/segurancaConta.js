@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Recuperar ID do cliente do localStorage (presumindo que você o armazena após login)
-    const clienteId = localStorage.getItem('clienteId');
+    // Recuperar ID do cliente do localStorage (corrigido para usar 'usuario' em vez de 'clienteId')
+    const clienteId = localStorage.getItem('usuario');
     
     if (!clienteId) {
         // Redirecionar para login se não estiver autenticado
+        alert('Você precisa estar logado para acessar esta página.');
         window.location.href = 'login.html';
         return;
     }
@@ -52,7 +53,7 @@ function alterarSenha(id) {
                 throw new Error(text || 'Erro ao alterar senha');
             });
         }
-        return response.json();
+        return response.text(); // Alterado para text() pois a resposta pode não ser JSON
     })
     .then(data => {
         exibirMensagem('Senha alterada com sucesso!', 'success');
