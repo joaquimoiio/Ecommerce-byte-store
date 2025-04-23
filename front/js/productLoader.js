@@ -1,11 +1,8 @@
-// Product loader for exibirProduto.html and produto.html
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on a product page
     const isProductPage = window.location.href.includes('produto.html');
     const isProductListPage = window.location.href.includes('exibirProduto.html');
     
     if (isProductPage) {
-        // Get product ID from URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const productId = urlParams.get('id');
         
@@ -13,25 +10,20 @@ document.addEventListener('DOMContentLoaded', function() {
             loadProductDetails(productId);
         } else {
             console.error('Product ID not found in URL');
-            // Redirect to main page or show error
             alert('Produto não encontrado. Redirecionando para a página principal.');
             window.location.href = 'exibirProduto.html';
         }
     } else if (isProductListPage) {
-        // Load featured products for the main page
         loadFeaturedProducts();
     }
 });
 
-// Function to load a single product's details
 function loadProductDetails(productId) {
-    // Show loading state
     const productDetails = document.querySelector('.produto-detalhes');
     if (productDetails) {
         productDetails.innerHTML = '<p>Carregando informações do produto...</p>';
     }
     
-    // Fetch product details from backend
     fetch(`http://localhost:8081/produtos/${productId}`)
         .then(response => {
             if (!response.ok) {
@@ -45,11 +37,9 @@ function loadProductDetails(productId) {
         .catch(error => {
             console.error('Error loading product:', error);
             
-            // Display dummy product for demonstration
             const mockProduct = getMockProduct(productId);
             displayProductDetails(mockProduct);
-            
-            // Show warning about mock data
+
             const warningDiv = document.createElement('div');
             warningDiv.style.backgroundColor = '#fff3cd';
             warningDiv.style.color = '#856404';
@@ -66,21 +56,17 @@ function loadProductDetails(productId) {
         });
 }
 
-// Function to display product details in the UI
 function displayProductDetails(product) {
-    // Update product name
     const productName = document.querySelector('.produto-nome');
     if (productName) {
         productName.textContent = product.nome;
     }
-    
-    // Update description if available
+
     const productDescription = document.querySelector('.produto-descricao');
     if (productDescription && product.descricao) {
         productDescription.textContent = product.descricao;
     }
-    
-    // Update prices
+
     const oldPrice = document.querySelector('.preco-antigo');
     if (oldPrice) {
         oldPrice.textContent = `R$${formatPrice(product.precoAntigo)}`;
@@ -90,14 +76,12 @@ function displayProductDetails(product) {
     if (promoPrice) {
         promoPrice.textContent = `R$${formatPrice(product.precoAtual)}`;
     }
-    
-    // Update parcelado price
+
     const parceladoPrices = document.querySelectorAll('.preco-parcelado p');
     if (parceladoPrices.length > 0) {
         parceladoPrices[0].textContent = `R$${formatPrice(product.precoAtual)}`;
     }
-    
-    // Set up add to cart button handler
+
     const addToCartBtn = document.querySelector('.btn-carrinho');
     if (addToCartBtn) {
         addToCartBtn.addEventListener('click', function() {
@@ -113,8 +97,7 @@ function displayProductDetails(product) {
             addToCart(product, quantity);
         });
     }
-    
-    // Set up buy now button handler
+
     const buyNowBtn = document.querySelector('.btn-comprar');
     if (buyNowBtn) {
         buyNowBtn.addEventListener('click', function() {
@@ -133,9 +116,7 @@ function displayProductDetails(product) {
     }
 }
 
-// Function to load featured products on main page
 function loadFeaturedProducts() {
-    // Try to fetch featured products from backend
     fetch('http://localhost:8081/produtos/destaque')
         .then(response => {
             if (!response.ok) {
@@ -148,10 +129,8 @@ function loadFeaturedProducts() {
         })
         .catch(error => {
             console.error('Error loading featured products:', error);
-            // Display mock products
             displayFeaturedProducts(getMockFeaturedProducts());
-            
-            // Show warning about mock data
+
             const warningDiv = document.createElement('div');
             warningDiv.style.backgroundColor = '#fff3cd';
             warningDiv.style.color = '#856404';
@@ -169,13 +148,10 @@ function loadFeaturedProducts() {
         });
 }
 
-// Function to display featured products on main page
 function displayFeaturedProducts(products) {
-    // Create a products section after the carousel
     const carousel = document.querySelector('.carousel-container');
     if (!carousel) return;
-    
-    // Check if products section already exists
+
     let productsSection = document.querySelector('.products-section');
     if (!productsSection) {
         productsSection = document.createElement('section');
@@ -186,18 +162,15 @@ function displayFeaturedProducts(products) {
     
     const productsGrid = document.querySelector('.products-grid');
     if (!productsGrid) return;
-    
-    // Clear existing products
+
     productsGrid.innerHTML = '';
-    
-    // Style for the products grid
+
     productsGrid.style.display = 'flex';
     productsGrid.style.flexWrap = 'wrap';
     productsGrid.style.justifyContent = 'center';
     productsGrid.style.gap = '20px';
     productsGrid.style.padding = '20px';
-    
-    // Add each product
+
     products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
@@ -220,8 +193,7 @@ function displayFeaturedProducts(products) {
         
         productsGrid.appendChild(productCard);
     });
-    
-    // Add click events to all "Ver Produto" buttons
+
     document.querySelectorAll('.view-product').forEach(button => {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
@@ -232,9 +204,8 @@ function displayFeaturedProducts(products) {
     });
 }
 
-// Function to add a product to cart
 function addToCart(product, quantity) {
-    // Check if user is logged in
+
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (!isLoggedIn) {
         alert('Você precisa estar logado para adicionar produtos ao carrinho.');
@@ -243,17 +214,13 @@ function addToCart(product, quantity) {
         return;
     }
     
-    // Get existing cart from localStorage or initialize empty array
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    // Check if product already exists in cart
     const existingProductIndex = cart.findIndex(item => item.id === product.id);
     
     if (existingProductIndex >= 0) {
-        // Update quantity if product already in cart
         cart[existingProductIndex].quantity += quantity;
     } else {
-        // Add new product to cart
         cart.push({
             id: product.id,
             nome: product.nome,
@@ -262,28 +229,22 @@ function addToCart(product, quantity) {
         });
     }
     
-    // Save updated cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // Show confirmation to user
     alert('Produto adicionado ao carrinho!');
 }
 
-// Helper function to format price
 function formatPrice(price) {
-    // Handle different price formats (string, number, BigDecimal object)
     if (typeof price === 'number') {
         return price.toFixed(2).replace('.', ',');
     } else if (typeof price === 'string') {
         return parseFloat(price).toFixed(2).replace('.', ',');
     } else if (price && typeof price === 'object') {
-        // Handle BigDecimal object from Java backend
         return parseFloat(price).toFixed(2).replace('.', ',');
     }
     return '0,00';
 }
 
-// Mock data for testing
 function getMockProduct(id) {
     return {
         id: id,

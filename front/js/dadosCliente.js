@@ -12,22 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     const form = document.querySelector('.form');
-    
-    // Carregar dados atuais do cliente
+
     carregarDadosCliente(clienteId);
-    
-    // Adicionar evento para envio do formulário
+
     form.addEventListener('submit', function(event) {
         event.preventDefault();
         atualizarDadosCliente(clienteId);
     });
 });
 
-// Função para carregar os dados atuais do cliente
 function carregarDadosCliente(id) {
     console.log("Tentando carregar dados do cliente ID:", id);
-    
-    // URL completa para debug
+
     const url = `http://localhost:8081/cliente/${id}`;
     console.log("URL da requisição:", url);
     
@@ -47,11 +43,9 @@ function carregarDadosCliente(id) {
     })
     .then(cliente => {
         console.log("Dados do cliente recebidos:", cliente);
-        
-        // Preencher o formulário com os dados do cliente
+
         document.getElementById('nmCliente').value = cliente.nmCliente || '';
-        
-        // Formatar data para o formato yyyy-MM-dd para o input date
+
         if (cliente.dtNasc) {
             try {
                 const data = new Date(cliente.dtNasc);
@@ -76,7 +70,6 @@ function carregarDadosCliente(id) {
     });
 }
 
-// Função para atualizar os dados do cliente
 function atualizarDadosCliente(id) {
     console.log("Tentando atualizar dados do cliente ID:", id);
     
@@ -85,14 +78,12 @@ function atualizarDadosCliente(id) {
     const nuCpf = document.getElementById('nuCpf').value;
     const nuTelefone = document.getElementById('nuTelefone').value;
     const dsEmail = document.getElementById('dsEmail').value;
-    
-    // Validação básica
+
     if (!nmCliente || !dtNasc || !nuCpf || !nuTelefone || !dsEmail) {
         alert('Por favor, preencha todos os campos obrigatórios.');
         return;
     }
-    
-    // Recuperar a senha atual para preservá-la na atualização
+
     fetch(`http://localhost:8081/cliente/${id}`, {
         method: 'GET',
         headers: {
@@ -114,7 +105,7 @@ function atualizarDadosCliente(id) {
             nuCpf: nuCpf,
             nuTelefone: nuTelefone,
             dsEmail: dsEmail,
-            dsSenha: cliente.dsSenha // Preservar a senha atual
+            dsSenha: cliente.dsSenha
         };
         
         console.log("Dados a serem enviados:", dadosAtualizados);

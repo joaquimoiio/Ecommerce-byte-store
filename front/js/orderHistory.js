@@ -1,8 +1,5 @@
-// orderHistory.js - Purchase history functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're on the history page
     if (window.location.href.includes('historico.html')) {
-        // Check login status
         const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
         const userId = localStorage.getItem('usuario');
         
@@ -16,9 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Function to load order history
 function loadOrderHistory(userId) {
-    // Attempt to fetch order history from backend
     fetch(`http://localhost:8081/pedidos/cliente/${userId}`)
         .then(response => {
             if (!response.ok) {
@@ -31,19 +26,16 @@ function loadOrderHistory(userId) {
         })
         .catch(error => {
             console.error('Erro:', error);
-            // Fallback to localStorage for demo if backend fails
             let orderHistory = JSON.parse(localStorage.getItem('orderHistory')) || [];
             orderHistory = orderHistory.filter(order => order.clienteId == userId);
             displayOrderHistory(orderHistory);
         });
 }
 
-// Function to display order history
 function displayOrderHistory(pedidos) {
     const historyContainer = document.querySelector('.historico-compras');
     if (!historyContainer) return;
-    
-    // Clear existing content except the heading
+
     const heading = historyContainer.querySelector('h2');
     historyContainer.innerHTML = '';
     historyContainer.appendChild(heading);
@@ -56,29 +48,24 @@ function displayOrderHistory(pedidos) {
         historyContainer.appendChild(emptyMessage);
         return;
     }
-    
-    // Sort orders by date (newest first) if we're using the localStorage fallback
+
     if (pedidos[0].date) {
         pedidos.sort((a, b) => new Date(b.date) - new Date(a.date));
     }
-    
-    // Add each order to the history container
+
     pedidos.forEach(order => {
         const orderElement = document.createElement('div');
         orderElement.className = 'compra';
-        
-        // Handle both backend format and localStorage format
+
         const orderId = order.id || order.id;
         const orderDate = order.dataHora ? new Date(order.dataHora) : new Date(order.date);
         const orderTotal = order.valorTotal || order.total;
         const orderStatus = order.status || order.status;
         
         orderElement.setAttribute('data-order-id', orderId);
-        
-        // Format date
+
         const formattedDate = `${orderDate.getDate().toString().padStart(2, '0')}/${(orderDate.getMonth() + 1).toString().padStart(2, '0')}/${orderDate.getFullYear()}`;
-        
-        // Get day of week in Portuguese
+
         const daysOfWeek = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
         const dayOfWeek = daysOfWeek[orderDate.getDay()];
         
@@ -88,8 +75,7 @@ function displayOrderHistory(pedidos) {
         `;
         
         historyContainer.appendChild(orderElement);
-        
-        // Add click event for order details
+
         const detailsButton = orderElement.querySelector('button');
         detailsButton.addEventListener('click', function() {
             showOrderDetails(order);
@@ -97,9 +83,7 @@ function displayOrderHistory(pedidos) {
     });
 }
 
-// Function to show order details
 function showOrderDetails(order) {
-    // Create a modal element
     const modal = document.createElement('div');
     modal.className = 'order-details-modal';
     modal.style.position = 'fixed';
@@ -112,18 +96,15 @@ function showOrderDetails(order) {
     modal.style.justifyContent = 'center';
     modal.style.alignItems = 'center';
     modal.style.zIndex = '1000';
-    
-    // Handle both backend format and localStorage format
+
     const orderId = order.id || order.id;
     const orderDate = order.dataHora ? new Date(order.dataHora) : new Date(order.date);
     const orderTotal = order.valorTotal || order.total;
     const orderStatus = order.status || order.status;
     const orderItems = order.itens || order.itens;
-    
-    // Format date
+
     const formattedDate = `${orderDate.getDate().toString().padStart(2, '0')}/${(orderDate.getMonth() + 1).toString().padStart(2, '0')}/${orderDate.getFullYear()}`;
-    
-    // Create modal content
+
     const modalContent = document.createElement('div');
     modalContent.style.backgroundColor = 'white';
     modalContent.style.padding = '20px';
@@ -133,8 +114,7 @@ function showOrderDetails(order) {
     modalContent.style.maxHeight = '80%';
     modalContent.style.overflowY = 'auto';
     modalContent.style.border = '5px solid #4088f4';
-    
-    // Modal header
+
     modalContent.innerHTML = `
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h3 style="margin: 0; color: #4088f4;">Detalhes do Pedido #${orderId.toString().slice(-4)}</h3>
@@ -151,28 +131,23 @@ function showOrderDetails(order) {
     
     modal.appendChild(modalContent);
     document.body.appendChild(modal);
-    
-    // Close button functionality
+
     const closeButton = modal.querySelector('.close-modal');
     closeButton.addEventListener('click', function() {
         document.body.removeChild(modal);
     });
-    
-    // Close modal when clicking outside
+
     modal.addEventListener('click', function(event) {
         if (event.target === modal) {
             document.body.removeChild(modal);
         }
     });
-    
-    // Load and display order items
+
     const orderItemsContainer = modal.querySelector('.order-items');
-    
-    // Check if we have real items or need to fetch them
+
     if (orderItems && orderItems.length > 0) {
         displayOrderItems(orderItems, orderItemsContainer);
     } else {
-        // Fetch order details from backend
         fetch(`http://localhost:8081/pedidos/${orderId}`)
             .then(response => {
                 if (!response.ok) {
@@ -190,14 +165,12 @@ function showOrderDetails(order) {
     }
 }
 
-// Function to display order items
 function displayOrderItems(items, container) {
     if (!items || items.length === 0) {
         container.innerHTML = '<p>Não há itens neste pedido.</p>';
         return;
     }
     
-    // Determine if we're using backend format or localStorage format
     const isBackendFormat = items[0].produto !== undefined;
     
     items.forEach(item => {
@@ -212,19 +185,15 @@ function displayOrderItems(items, container) {
         let productId, productName, quantity, price;
         
         if (isBackendFormat) {
-            // Backend format
             productId = item.produto.id;
             productName = item.produto.nome;
             quantity = item.quantidade;
             price = item.precoUnitario;
         } else {
-            // localStorage format
             productId = item.produtoId;
             quantity = item.quantidade;
             price = item.precoUnitario;
-            
-            // For localStorage format, we might need to fetch product details
-            // or use mock data for demo purposes
+
             const mockProducts = [
                 { id: 1, nome: 'Notebook Gamer XYZ' },
                 { id: 2, nome: 'Mouse Gamer RGB' },
@@ -240,7 +209,6 @@ function displayOrderItems(items, container) {
             }
         }
         
-        // Create the item element content
         itemElement.innerHTML = `
             <div style="flex-grow: 1; padding-left: 15px;">
                 <p style="margin: 0 0 5px 0; font-weight: bold;">${productName}</p>
@@ -254,7 +222,6 @@ function displayOrderItems(items, container) {
         container.appendChild(itemElement);
     });
     
-    // Add total section
     const totalElement = document.createElement('div');
     totalElement.style.display = 'flex';
     totalElement.style.justifyContent = 'space-between';
@@ -263,7 +230,6 @@ function displayOrderItems(items, container) {
     totalElement.style.paddingTop = '15px';
     totalElement.style.fontWeight = 'bold';
     
-    // Calculate total from items
     let total = 0;
     items.forEach(item => {
         const price = isBackendFormat ? item.precoUnitario : item.precoUnitario;

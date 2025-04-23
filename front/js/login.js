@@ -34,19 +34,14 @@ function verificar(event) {
 
     if (usuarioEncontrado) {
         alert("Logado com sucesso!");
-        // Armazenar informações do usuário e status de login
         localStorage.setItem('usuario', usuarioEncontrado.id);
         localStorage.setItem('isLoggedIn', 'true');
         
-        // Verificar se existe uma página para redirecionar após o login
         const redirectPage = localStorage.getItem('redirectAfterLogin');
         if (redirectPage) {
-            // Limpar o redirecionamento do localStorage
             localStorage.removeItem('redirectAfterLogin');
-            // Redirecionar para a página salva
             window.location.href = redirectPage;
         } else {
-            // Redirecionar para a página principal
             window.location.href = "exibirProduto.html";
         }
     } 

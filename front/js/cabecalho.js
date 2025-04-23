@@ -14,18 +14,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 setupLogoutFunctionality();
                 setupPerfilFunctionality();
             }
-            
-            // Setup cart link functionality (both for logged in and logged out users)
+
             setupCartFunctionality();
-            
-            // Carregar o script de pesquisa se não existir
+
             if (!document.querySelector('script[src*="search.js"]')) {
                 const searchScript = document.createElement('script');
                 searchScript.src = '../js/search.js';
                 document.body.appendChild(searchScript);
             }
-            
-            // Carregamento do bootstrap se necessário
+
             if (!document.querySelector('script[src*="bootstrap.bundle.min.js"]')) {
                 const bootstrapScript = document.createElement('script');
                 bootstrapScript.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js';
@@ -81,8 +78,7 @@ function setupPerfilFunctionality() {
         } else {
             console.warn("Link de perfil não encontrado");
         }
-        
-        // Configurar também o link de segurança da conta
+
         const segurancaLink = document.querySelector('a[href="segurancaConta.html"]');
         if (segurancaLink) {
             segurancaLink.addEventListener('click', function(e) {
@@ -100,8 +96,7 @@ function setupPerfilFunctionality() {
         } else {
             console.warn("Link de segurança da conta não encontrado");
         }
-        
-        // Configurar o link de histórico
+
         const historicoLink = document.querySelector('a[href="historico.html"]');
         if (historicoLink) {
             historicoLink.addEventListener('click', function(e) {
@@ -122,7 +117,6 @@ function setupPerfilFunctionality() {
 
 function setupCartFunctionality() {
     setTimeout(() => {
-        // Procurar o link do carrinho
         const cartLink = document.querySelector('a[href="carrinho.html"]');
         
         if (cartLink) {
@@ -132,10 +126,8 @@ function setupCartFunctionality() {
                 const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
                 
                 if (isLoggedIn) {
-                    // Se estiver logado, pode acessar o carrinho
                     window.location.href = "carrinho.html";
                 } else {
-                    // Se não estiver logado, redireciona para login
                     alert("Você precisa estar logado para acessar o carrinho.");
                     localStorage.setItem('redirectAfterLogin', 'carrinho.html');
                     window.location.href = "login.html";

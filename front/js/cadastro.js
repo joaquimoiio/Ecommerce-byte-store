@@ -4,7 +4,7 @@ document.getElementById('sendDataBtn').addEventListener('click', function (e) {
     const nmCliente = document.getElementById('nmCliente').value;
     const nuCpf = document.getElementById('nuCpf').value;
     const dsEmail = document.getElementById('dsEmail').value;
-    const dtNasc = document.getElementById('dsNascimento').value;  // Changed variable name to match the DTO field
+    const dtNasc = document.getElementById('dsNascimento').value;  
     const nuTelefone = document.getElementById('nuTelefone').value;
     const dsSenha = document.getElementById('dsSenha').value;
 
@@ -12,12 +12,12 @@ document.getElementById('sendDataBtn').addEventListener('click', function (e) {
         nmCliente: nmCliente,
         nuCpf: nuCpf,
         dsEmail: dsEmail,
-        dtNasc: dtNasc,  // Changed from dsNascimento to dtNasc to match backend DTO
+        dtNasc: dtNasc,  
         nuTelefone: nuTelefone,
         dsSenha: dsSenha
     };
 
-    fetch(apiUrl, {  // Use the consistent apiUrl variable instead of hardcoded URL
+    fetch(apiUrl, {  
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,14 +27,14 @@ document.getElementById('sendDataBtn').addEventListener('click', function (e) {
         .then(response => {
             if (!response.ok) {
                 return response.json().then(err => {
-                    throw err;  // Improved error handling
+                    throw err; 
                 });
             }
-            return response.json();  // Return the response JSON for the next .then block
+            return response.json(); 
         })
         .then(data => {
             alert('Conta criada com sucesso!');
-            window.location.href = 'login.html'; // Redirecionando para login.html em vez de exibirProduto.html
+            window.location.href = 'login.html';
         })
         .catch(error => {
             console.error('Erro ao criar conta:', error);
