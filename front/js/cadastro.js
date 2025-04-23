@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:8080/cliente';
+const apiUrl = 'http://localhost:8081/cliente';
 
 document.getElementById('sendDataBtn').addEventListener('click', function (e) {
     const nmCliente = document.getElementById('nmCliente').value;

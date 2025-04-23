@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", () => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true"; 
     const headerFile = isLoggedIn ? "cabecalho.html" : "cabecalhoDeslogado.html"; 
@@ -15,6 +14,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 setupLogoutFunctionality();
                 setupPerfilFunctionality();
             }
+            
+            // Setup cart link functionality (both for logged in and logged out users)
+            setupCartFunctionality();
             
             if (!document.querySelector('script[src*="bootstrap.bundle.min.js"]')) {
                 const bootstrapScript = document.createElement('script');
@@ -70,6 +72,34 @@ function setupPerfilFunctionality() {
             console.log("Funcionalidade de perfil configurada");
         } else {
             console.warn("Link de perfil não encontrado");
+        }
+    }, 100);
+}
+
+function setupCartFunctionality() {
+    setTimeout(() => {
+        // Procurar o link do carrinho
+        const cartLink = document.querySelector('a[href="carrinho.html"]');
+        
+        if (cartLink) {
+            cartLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                
+                if (isLoggedIn) {
+                    // Se estiver logado, pode acessar o carrinho
+                    window.location.href = "carrinho.html";
+                } else {
+                    // Se não estiver logado, redireciona para login
+                    alert("Você precisa estar logado para acessar o carrinho.");
+                    localStorage.setItem('redirectAfterLogin', 'carrinho.html');
+                    window.location.href = "login.html";
+                }
+            });
+            console.log("Funcionalidade de carrinho configurada");
+        } else {
+            console.warn("Link do carrinho não encontrado");
         }
     }, 100);
 }

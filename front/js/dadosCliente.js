@@ -28,7 +28,7 @@ function carregarDadosCliente(id) {
     console.log("Tentando carregar dados do cliente ID:", id);
     
     // URL completa para debug
-    const url = `http://localhost:8080/cliente/${id}`;
+    const url = `http://localhost:8081/cliente/${id}`;
     console.log("URL da requisição:", url);
     
     fetch(url, {
@@ -93,7 +93,7 @@ function atualizarDadosCliente(id) {
     }
     
     // Recuperar a senha atual para preservá-la na atualização
-    fetch(`http://localhost:8080/cliente/${id}`, {
+    fetch(`http://localhost:8081/cliente/${id}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -119,7 +119,7 @@ function atualizarDadosCliente(id) {
         
         console.log("Dados a serem enviados:", dadosAtualizados);
         
-        return fetch(`http://localhost:8080/cliente/${id}`, {
+        return fetch(`http://localhost:8081/cliente/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

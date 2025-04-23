@@ -35,7 +35,7 @@ function alterarSenha(id) {
     }
     
     // Enviar requisição para alterar a senha
-    fetch(`http://localhost:8080/cliente/${id}/alterar-senha`, {
+    fetch(`http://localhost:8081/cliente/${id}/alterar-senha`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

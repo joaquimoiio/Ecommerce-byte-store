@@ -12,7 +12,7 @@ let usuarios = [];
 
 async function carregarUsuarios() {
     try {
-        const response = await fetch(`http://localhost:8080/cliente`);
+        const response = await fetch(`http://localhost:8081/cliente`);
         if (!response.ok) {
             throw new Error(`Erro ao buscar usuários: ${response.status}`);
         }
@@ -38,8 +38,17 @@ function verificar(event) {
         localStorage.setItem('usuario', usuarioEncontrado.id);
         localStorage.setItem('isLoggedIn', 'true');
         
-        // Redirecionar para a página principal
-        window.location.href = "exibirProduto.html";
+        // Verificar se existe uma página para redirecionar após o login
+        const redirectPage = localStorage.getItem('redirectAfterLogin');
+        if (redirectPage) {
+            // Limpar o redirecionamento do localStorage
+            localStorage.removeItem('redirectAfterLogin');
+            // Redirecionar para a página salva
+            window.location.href = redirectPage;
+        } else {
+            // Redirecionar para a página principal
+            window.location.href = "exibirProduto.html";
+        }
     } 
     else {
         alert("Seu email ou senha estão incorretos");
