@@ -73,9 +73,19 @@ function displayProducts(products) {
     products.forEach(product => {
         const row = document.createElement('tr');
         
+        // Miniatura da imagem para visualização na lista
+        const imageThumbnail = product.imagemPrincipal ? 
+            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
+            '<span class="text-muted">Sem imagem</span>';
+        
         row.innerHTML = `
             <td>${product.id}</td>
-            <td>${product.nome}</td>
+            <td>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    ${imageThumbnail}
+                    ${product.nome}
+                </div>
+            </td>
             <td>${product.categoria}</td>
             <td>R$ ${formatPrice(product.precoAtual)}</td>
             <td>${product.estoque}</td>
@@ -83,6 +93,9 @@ function displayProducts(products) {
             <td>
                 <button class="btn btn-sm btn-primary edit-btn" data-id="${product.id}">
                     <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-sm btn-danger delete-btn" data-id="${product.id}">
+                    <i class="bi bi-trash"></i>
                 </button>
             </td>
         `;
@@ -95,6 +108,16 @@ function displayProducts(products) {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
             editProduct(productId);
+        });
+    });
+
+    // Adicionar event listeners para os botões de exclusão
+    document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            if (confirm('Tem certeza que deseja excluir este produto?')) {
+                deleteProduct(productId);
+            }
         });
     });
 }
@@ -124,6 +147,27 @@ function editProduct(productId) {
             document.getElementById('saveBtn').textContent = 'Atualizar Produto';
             document.getElementById('cancelBtn').style.display = 'block';
             
+            // Adicionar preview da imagem se disponível
+            const imagePreviewContainer = document.createElement('div');
+            imagePreviewContainer.id = 'imagePreview';
+            imagePreviewContainer.className = 'mt-2 mb-3';
+            
+            if (product.imagemPrincipal) {
+                imagePreviewContainer.innerHTML = `
+                    <p class="mb-1">Imagem atual:</p>
+                    <img src="${product.imagemPrincipal}" alt="${product.nome}" 
+                         style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
+                `;
+                
+                // Inserir após o campo de imagem
+                const imageField = document.getElementById('productImage').parentNode;
+                if (!document.getElementById('imagePreview')) {
+                    imageField.appendChild(imagePreviewContainer);
+                } else {
+                    document.getElementById('imagePreview').innerHTML = imagePreviewContainer.innerHTML;
+                }
+            }
+            
             // Rolar até o formulário
             document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
         })
@@ -131,6 +175,26 @@ function editProduct(productId) {
             console.error('Erro ao carregar produto:', error);
             showNotification('Erro ao carregar dados do produto.', 'error');
         });
+}
+
+function deleteProduct(productId) {
+    fetch(`http://localhost:8081/produtos/${productId}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erro ao excluir produto');
+        }
+        return response.text();
+    })
+    .then(() => {
+        showNotification('Produto excluído com sucesso!', 'success');
+        loadProductsList();
+    })
+    .catch(error => {
+        console.error('Erro ao excluir produto:', error);
+        showNotification('Erro ao excluir produto.', 'error');
+    });
 }
 
 function saveProduct() {
@@ -148,6 +212,13 @@ function saveProduct() {
         imagensGaleria: [], // Campo vazio para novas imagens
         destaque: document.getElementById('productFeatured').checked
     };
+
+    // Validar a URL da imagem
+    if (productData.imagemPrincipal && !isValidImageUrl(productData.imagemPrincipal)) {
+        if (!confirm('A URL da imagem parece inválida. Deseja continuar mesmo assim?')) {
+            return;
+        }
+    }
 
     const url = isNewProduct 
         ? 'http://localhost:8081/produtos' 
@@ -189,6 +260,12 @@ function resetForm() {
     document.getElementById('formTitle').innerHTML = '<i class="bi bi-plus-circle"></i> Adicionar Produto';
     document.getElementById('saveBtn').textContent = 'Salvar Produto';
     document.getElementById('cancelBtn').style.display = 'none';
+    
+    // Remover preview da imagem se existir
+    const imagePreview = document.getElementById('imagePreview');
+    if (imagePreview) {
+        imagePreview.remove();
+    }
 }
 
 function showNotification(message, type) {
@@ -214,3 +291,39 @@ function formatPrice(price) {
     }
     return '0,00';
 }
+
+function isValidImageUrl(url) {
+    // Verificação básica para URLs de imagem
+    return url.match(/\.(jpeg|jpg|gif|png|webp)$/) !== null || 
+           url.startsWith('http') || 
+           url.startsWith('https') || 
+           url.startsWith('/');
+}
+
+// Adicionar listener para preview de imagem durante digitação
+document.addEventListener('DOMContentLoaded', function() {
+    const imageInput = document.getElementById('productImage');
+    if (imageInput) {
+        imageInput.addEventListener('input', function(e) {
+            const imageUrl = e.target.value.trim();
+            
+            let imagePreview = document.getElementById('imagePreview');
+            if (!imagePreview) {
+                imagePreview = document.createElement('div');
+                imagePreview.id = 'imagePreview';
+                imagePreview.className = 'mt-2 mb-3';
+                e.target.parentNode.appendChild(imagePreview);
+            }
+            
+            if (imageUrl && isValidImageUrl(imageUrl)) {
+                imagePreview.innerHTML = `
+                    <p class="mb-1">Preview da imagem:</p>
+                    <img src="${imageUrl}" alt="Preview" 
+                         style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
+                `;
+            } else {
+                imagePreview.innerHTML = '';
+            }
+        });
+    }
+});

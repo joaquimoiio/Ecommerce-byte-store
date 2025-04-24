@@ -19,6 +19,11 @@
         <div class="produto-info">
             <h1 class="produto-nome">Carregando produto...</h1>
             
+            <!-- Adicionando a imagem do produto -->
+            <div class="produto-imagem">
+                <img src="" alt="Imagem do produto" style="max-width: 300px; max-height: 300px; margin: 20px auto; display: block;">
+            </div>
+            
             <div class="produto-descricao"></div>
             
             <div class="produto-preco">
@@ -70,6 +75,13 @@
                     const productName = document.querySelector('.produto-nome');
                     if (productName) {
                         productName.textContent = product.nome;
+                    }
+                    
+                    // Update product image
+                    const productImage = document.querySelector('.produto-imagem img');
+                    if (productImage && product.imagemPrincipal) {
+                        productImage.src = product.imagemPrincipal;
+                        productImage.alt = product.nome;
                     }
                     
                     // Update description if available

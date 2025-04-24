@@ -164,7 +164,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 4499.90,
             categoria: "Notebooks",
             estoque: 10,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Notebook+Gamer"
         },
         {
             id: 2,
@@ -174,7 +175,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 3299.90,
             categoria: "Notebooks",
             estoque: 15,
-            destaque: false
+            destaque: false,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Notebook+Ultrafino"
         },
         {
             id: 3,
@@ -184,7 +186,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 199.90,
             categoria: "Periféricos",
             estoque: 25,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Mouse+Gamer"
         },
         {
             id: 4,
@@ -194,7 +197,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 299.90,
             categoria: "Periféricos",
             estoque: 20,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Teclado+Mecanico"
         },
         {
             id: 5,
@@ -204,7 +208,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 249.90,
             categoria: "Periféricos",
             estoque: 18,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Headset"
         },
         {
             id: 6,
@@ -214,7 +219,8 @@ function gerarProdutosSimulados(termo) {
             precoAtual: 1299.90,
             categoria: "Monitores",
             estoque: 8,
-            destaque: false
+            destaque: false,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Monitor+Gamer"
         }
     ];
 
@@ -303,9 +309,14 @@ function exibirResultadosPesquisa(produtos, termo, dadosSimulados = false) {
         productCard.style.textAlign = 'center';
         productCard.style.backgroundColor = 'white';
 
+        // Adicionar imagem do produto se disponível
+        const imageHtml = product.imagemPrincipal ? 
+            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
+            `<h4 style="color: #4088f4;">${product.nome}</h4>`;
+
         productCard.innerHTML = `
             <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                <h4 style="color: #4088f4;">${product.nome}</h4>
+                ${imageHtml}
             </div>
             <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nome}</h3>
             <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.precoAntigo)}</p>
@@ -348,7 +359,8 @@ function loadFeaturedProductsFallback(container) {
             precoAtual: 4499.90,
             categoria: "Notebooks",
             estoque: 10,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Notebook+Gamer"
         },
         {
             id: 3,
@@ -357,7 +369,8 @@ function loadFeaturedProductsFallback(container) {
             precoAtual: 199.90,
             categoria: "Periféricos",
             estoque: 25,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Mouse+Gamer"
         },
         {
             id: 4,
@@ -366,7 +379,8 @@ function loadFeaturedProductsFallback(container) {
             precoAtual: 299.90,
             categoria: "Periféricos",
             estoque: 20,
-            destaque: true
+            destaque: true,
+            imagemPrincipal: "https://via.placeholder.com/300x300?text=Teclado+Mecanico"
         }
     ];
 
@@ -389,9 +403,14 @@ function loadFeaturedProductsFallback(container) {
         productCard.style.textAlign = 'center';
         productCard.style.backgroundColor = 'white';
 
+        // Adicionar imagem do produto
+        const imageHtml = product.imagemPrincipal ? 
+            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
+            `<h4 style="color: #4088f4;">${product.nome}</h4>`;
+
         productCard.innerHTML = `
             <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                <h4 style="color: #4088f4;">${product.nome}</h4>
+                ${imageHtml}
             </div>
             <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nome}</h3>
             <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.precoAntigo)}</p>

@@ -37,8 +37,6 @@ function loadProductDetails(productId) {
         .catch(error => {
             console.error('Error loading product:', error);
             
-            const mockProduct = getMockProduct(productId);
-            displayProductDetails(mockProduct);
 
             const warningDiv = document.createElement('div');
             warningDiv.style.backgroundColor = '#fff3cd';
@@ -60,6 +58,12 @@ function displayProductDetails(product) {
     const productName = document.querySelector('.produto-nome');
     if (productName) {
         productName.textContent = product.nome;
+    }
+
+    const productImage = document.querySelector('.produto-imagem img');
+    if (productImage && product.imagemPrincipal) {
+        productImage.src = product.imagemPrincipal;
+        productImage.alt = product.nome;
     }
 
     const productDescription = document.querySelector('.produto-descricao');
@@ -129,7 +133,6 @@ function loadFeaturedProducts() {
         })
         .catch(error => {
             console.error('Error loading featured products:', error);
-            displayFeaturedProducts(getMockFeaturedProducts());
 
             const warningDiv = document.createElement('div');
             warningDiv.style.backgroundColor = '#fff3cd';
@@ -181,9 +184,14 @@ function displayFeaturedProducts(products) {
         productCard.style.textAlign = 'center';
         productCard.style.backgroundColor = 'white';
         
+        // Criar uma div para a imagem do produto
+        const imageHtml = product.imagemPrincipal ? 
+            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
+            `<h4 style="color: #4088f4;">${product.nome}</h4>`;
+        
         productCard.innerHTML = `
             <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
-                <h4 style="color: #4088f4;">${product.nome}</h4>
+                ${imageHtml}
             </div>
             <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nome}</h3>
             <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.precoAntigo)}</p>
@@ -225,7 +233,8 @@ function addToCart(product, quantity) {
             id: product.id,
             nome: product.nome,
             preco: product.precoAtual,
-            quantity: quantity
+            quantity: quantity,
+            imagem: product.imagemPrincipal
         });
     }
     
@@ -243,58 +252,4 @@ function formatPrice(price) {
         return parseFloat(price).toFixed(2).replace('.', ',');
     }
     return '0,00';
-}
-
-function getMockProduct(id) {
-    return {
-        id: id,
-        nome: 'Notebook Gamer XYZ',
-        precoAntigo: 4439.90,
-        precoAtual: 3995.91,
-        descricao: 'Notebook Gamer de última geração com processador de alta performance.',
-        categoria: 'Notebooks',
-        estoque: 10,
-        destaque: true
-    };
-}
-
-function getMockFeaturedProducts() {
-    return [
-        {
-            id: 1,
-            nome: 'Notebook Gamer XYZ',
-            precoAntigo: 4439.90,
-            precoAtual: 3995.91,
-            categoria: 'Notebooks',
-            estoque: 10,
-            destaque: true
-        },
-        {
-            id: 2,
-            nome: 'Mouse Gamer RGB',
-            precoAntigo: 249.90,
-            precoAtual: 199.90,
-            categoria: 'Periféricos',
-            estoque: 25,
-            destaque: true
-        },
-        {
-            id: 3,
-            nome: 'Teclado Mecânico LED',
-            precoAntigo: 349.90,
-            precoAtual: 299.90,
-            categoria: 'Periféricos',
-            estoque: 15,
-            destaque: true
-        },
-        {
-            id: 4,
-            nome: 'Headset 7.1 Surround',
-            precoAntigo: 299.90,
-            precoAtual: 249.90,
-            categoria: 'Periféricos',
-            estoque: 20,
-            destaque: true
-        }
-    ];
 }

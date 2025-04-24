@@ -32,7 +32,11 @@ function loadCart() {
         cartItemElement.setAttribute('data-id', item.id);
         cartItemElement.setAttribute('data-price', item.preco);
         
+        // Incluir a imagem do produto se disponível
+        const imageSrc = item.imagem || 'https://via.placeholder.com/90x90?text=Produto';
+        
         cartItemElement.innerHTML = `
+            <img src="${imageSrc}" alt="${item.nome}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 10px; border: 3px solid #4677E0;">
             <div class="item-details">
                 <h4>${item.nome}</h4>
                 <p>R$${typeof item.preco === 'number' ? item.preco.toFixed(2).replace('.', ',') : item.preco}</p>
