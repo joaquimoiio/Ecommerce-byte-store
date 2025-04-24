@@ -252,4 +252,4 @@ function formatPrice(price) {
         return parseFloat(price).toFixed(2).replace('.', ',');
     }
     return '0,00';
-}
+}8

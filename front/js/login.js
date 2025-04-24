@@ -32,9 +32,11 @@ function verificar(event) {
 
     const usuarioEncontrado = usuarios.find(u => dsEmail === u.dsEmail && dsSenha === u.dsSenha);
 
+    const usuarioAdminEncontrado = usuarios.find(u => dsEmail == u.Admin && dsSenha == u.Admin);
+
     if (usuarioEncontrado) {
         alert("Logado com sucesso!");
-        localStorage.setItem('usuario', usuarioEncontrado.id);
+        localStorage.setItem('usuario', usuarioEncontrado.cdCliente);
         localStorage.setItem('isLoggedIn', 'true');
         
         const redirectPage = localStorage.getItem('redirectAfterLogin');
@@ -44,8 +46,12 @@ function verificar(event) {
         } else {
             window.location.href = "exibirProduto.html";
         }
-    } 
-    else {
+    }else if (usuarioAdminEncontrado){
+        alert("Admin logado com sucesso!");
+        localStorage.setItem('usuario', usuarioEncontrado.cdCliente);
+        window.location.href = "exibirProduto.html";
+    } else {
         alert("Seu email ou senha estão incorretos");
     }
+    
 }

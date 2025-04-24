@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar se está logado como admin
     const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
     if (!isAdminLoggedIn) {
-        window.location.href = 'adminLogin.html';
+        window.location.href = 'adminProdutos.html';
         return;
     }
 
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
             localStorage.removeItem('isAdminLoggedIn');
-            window.location.href = 'adminLogin.html';
+            window.location.href = 'adminProdutos.html';
         });
     }
 
@@ -75,26 +75,26 @@ function displayProducts(products) {
         
         // Miniatura da imagem para visualização na lista
         const imageThumbnail = product.imagemPrincipal ? 
-            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
+            `<img src="${product.imagemPrincipal}" alt="${product.nmProduto}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
             '<span class="text-muted">Sem imagem</span>';
         
         row.innerHTML = `
-            <td>${product.id}</td>
+            <td>${product.cdProduto}</td>
             <td>
                 <div style="display: flex; align-items: center; gap: 10px;">
                     ${imageThumbnail}
-                    ${product.nome}
+                    ${product.nmProduto}
                 </div>
             </td>
-            <td>${product.categoria}</td>
-            <td>R$ ${formatPrice(product.precoAtual)}</td>
-            <td>${product.estoque}</td>
+            <td>${product.dsCategoria}</td>
+            <td>R$ ${formatPrice(product.vlProduto)}</td>
+            <td>${product.dsEstoque}</td>
             <td>${product.destaque ? '<i class="bi bi-star-fill text-warning"></i>' : '-'}</td>
             <td>
-                <button class="btn btn-sm btn-primary edit-btn" data-id="${product.id}">
+                <button class="btn btn-sm btn-primary edit-btn" data-id="${product.cdProduto}">
                     <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-sm btn-danger delete-btn" data-id="${product.id}">
+                <button class="btn btn-sm btn-danger delete-btn" data-id="${product.cdProduto}">
                     <i class="bi bi-trash"></i>
                 </button>
             </td>
@@ -132,13 +132,13 @@ function editProduct(productId) {
         })
         .then(product => {
             // Preencher o formulário com os dados do produto
-            document.getElementById('productId').value = product.id;
-            document.getElementById('productName').value = product.nome;
-            document.getElementById('productDescription').value = product.descricao;
-            document.getElementById('productCategory').value = product.categoria;
-            document.getElementById('productOldPrice').value = product.precoAntigo;
-            document.getElementById('productPrice').value = product.precoAtual;
-            document.getElementById('productStock').value = product.estoque;
+            document.getElementById('productId').value = product.cdProduto;
+            document.getElementById('productName').value = product.nmProduto;
+            document.getElementById('productDescription').value = product.dsProduto;
+            document.getElementById('productCategory').value = product.dsCategoria;
+            document.getElementById('productOldPrice').value = product.vlAntigo;
+            document.getElementById('productPrice').value = product.vlProduto;
+            document.getElementById('productStock').value = product.dsEstoque;
             document.getElementById('productImage').value = product.imagemPrincipal;
             document.getElementById('productFeatured').checked = product.destaque;
 
@@ -155,7 +155,7 @@ function editProduct(productId) {
             if (product.imagemPrincipal) {
                 imagePreviewContainer.innerHTML = `
                     <p class="mb-1">Imagem atual:</p>
-                    <img src="${product.imagemPrincipal}" alt="${product.nome}" 
+                    <img src="${product.imagemPrincipal}" alt="${product.nmProduto}" 
                          style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
                 `;
                 
@@ -202,12 +202,12 @@ function saveProduct() {
     const isNewProduct = !productId;
 
     const productData = {
-        nome: document.getElementById('productName').value,
-        descricao: document.getElementById('productDescription').value,
-        precoAntigo: parseFloat(document.getElementById('productOldPrice').value),
-        precoAtual: parseFloat(document.getElementById('productPrice').value),
-        estoque: parseInt(document.getElementById('productStock').value),
-        categoria: document.getElementById('productCategory').value,
+        nmProduto: document.getElementById('productName').value,
+        dsProduto: document.getElementById('productDescription').value,
+        vlAntigo: parseFloat(document.getElementById('productOldPrice').value),
+        vlProduto: parseFloat(document.getElementById('productPrice').value),
+        dsEstoque: parseInt(document.getElementById('productStock').value),
+        dsCategoria: document.getElementById('productCategory').value,
         imagemPrincipal: document.getElementById('productImage').value,
         imagensGaleria: [], // Campo vazio para novas imagens
         destaque: document.getElementById('productFeatured').checked
