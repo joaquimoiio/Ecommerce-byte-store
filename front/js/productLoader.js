@@ -57,33 +57,33 @@ function loadProductDetails(productId) {
 function displayProductDetails(product) {
     const productName = document.querySelector('.produto-nome');
     if (productName) {
-        productName.textContent = product.nome;
+        productName.textContent = product.nmProduto;
     }
 
     const productImage = document.querySelector('.produto-imagem img');
     if (productImage && product.imagemPrincipal) {
         productImage.src = product.imagemPrincipal;
-        productImage.alt = product.nome;
+        productImage.alt = product.nmProduto;
     }
 
     const productDescription = document.querySelector('.produto-descricao');
-    if (productDescription && product.descricao) {
-        productDescription.textContent = product.descricao;
+    if (productDescription && product.dsProduto) {
+        productDescription.textContent = product.dsProduto;
     }
 
     const oldPrice = document.querySelector('.preco-antigo');
     if (oldPrice) {
-        oldPrice.textContent = `R$${formatPrice(product.precoAntigo)}`;
+        oldPrice.textContent = `R$${formatPrice(product.vlAntigo)}`;
     }
     
     const promoPrice = document.querySelector('.preco-promocao');
     if (promoPrice) {
-        promoPrice.textContent = `R$${formatPrice(product.precoAtual)}`;
+        promoPrice.textContent = `R$${formatPrice(product.vlProduto)}`;
     }
 
     const parceladoPrices = document.querySelectorAll('.preco-parcelado p');
     if (parceladoPrices.length > 0) {
-        parceladoPrices[0].textContent = `R$${formatPrice(product.precoAtual)}`;
+        parceladoPrices[0].textContent = `R$${formatPrice(product.vlProduto)}`;
     }
 
     const addToCartBtn = document.querySelector('.btn-carrinho');
@@ -92,7 +92,7 @@ function displayProductDetails(product) {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (!isLoggedIn) {
                 alert('Você precisa estar logado para adicionar produtos ao carrinho.');
-                localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.id);
+                localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.cdProduto);
                 window.location.href = 'login.html';
                 return;
             }
@@ -108,7 +108,7 @@ function displayProductDetails(product) {
             const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
             if (!isLoggedIn) {
                 alert('Você precisa estar logado para comprar produtos.');
-                localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.id);
+                localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.cdProduto);
                 window.location.href = 'login.html';
                 return;
             }
@@ -184,19 +184,18 @@ function displayFeaturedProducts(products) {
         productCard.style.textAlign = 'center';
         productCard.style.backgroundColor = 'white';
         
-        // Criar uma div para a imagem do produto
         const imageHtml = product.imagemPrincipal ? 
-            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
-            `<h4 style="color: #4088f4;">${product.nome}</h4>`;
+            `<img src="${product.imagemPrincipal}" alt="${product.nmProduto}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
+            `<h4 style="color: #4088f4;">${product.nmProduto}</h4>`;
         
         productCard.innerHTML = `
             <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
                 ${imageHtml}
             </div>
-            <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nome}</h3>
+            <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nmProduto}</h3>
             <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.precoAntigo)}</p>
             <p style="font-size: 20px; color: #e60000; margin: 5px 0;">R$${formatPrice(product.precoAtual)}</p>
-            <button class="btn btn-primary view-product" data-id="${product.id}" style="background-color: #4088f4; border-color: #4088f4; width: 100%; margin-top: 10px;">Ver Produto</button>
+            <button class="btn btn-primary view-product" data-id="${product.cdProduto}" style="background-color: #4088f4; border-color: #4088f4; width: 100%; margin-top: 10px;">Ver Produto</button>
         `;
         
         productsGrid.appendChild(productCard);
@@ -217,22 +216,22 @@ function addToCart(product, quantity) {
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     if (!isLoggedIn) {
         alert('Você precisa estar logado para adicionar produtos ao carrinho.');
-        localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.id);
+        localStorage.setItem('redirectAfterLogin', 'produto.html?id=' + product.cdProduto);
         window.location.href = 'login.html';
         return;
     }
     
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     
-    const existingProductIndex = cart.findIndex(item => item.id === product.id);
+    const existingProductIndex = cart.findIndex(item => item.cdProduto === product.cdProduto);
     
     if (existingProductIndex >= 0) {
         cart[existingProductIndex].quantity += quantity;
     } else {
         cart.push({
-            id: product.id,
-            nome: product.nome,
-            preco: product.precoAtual,
+            id: product.cdProduto,
+            nome: product.nmProduto,
+            preco: product.vlProduto,
             quantity: quantity,
             imagem: product.imagemPrincipal
         });

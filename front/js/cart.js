@@ -29,21 +29,20 @@ function loadCart() {
     cartItems.forEach(item => {
         const cartItemElement = document.createElement('div');
         cartItemElement.className = 'cart-item';
-        cartItemElement.setAttribute('data-id', item.id);
-        cartItemElement.setAttribute('data-price', item.preco);
+        cartItemElement.setAttribute('data-id', item.cdItemPedido);
+        cartItemElement.setAttribute('data-price', item.vlUnitario);
         
-        // Incluir a imagem do produto se disponível
         const imageSrc = item.imagem || 'https://via.placeholder.com/90x90?text=Produto';
         
         cartItemElement.innerHTML = `
-            <img src="${imageSrc}" alt="${item.nome}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 10px; border: 3px solid #4677E0;">
+            <img src="${imageSrc}" alt="${item.produto}" style="width: 90px; height: 90px; object-fit: cover; border-radius: 10px; border: 3px solid #4677E0;">
             <div class="item-details">
-                <h4>${item.nome}</h4>
-                <p>R$${typeof item.preco === 'number' ? item.preco.toFixed(2).replace('.', ',') : item.preco}</p>
+                <h4>${item.produto}</h4>
+                <p>R$${typeof item.vlUnitario === 'number' ? item.vlUnitario.toFixed(2).replace('.', ',') : item.vlUnitario}</p>
             </div>
             <div class="quantity">
                 <button class="decrease-quantity">-</button>
-                <input type="text" value="${item.quantity}" readonly>
+                <input type="text" value="${item.qtPedido}" readonly>
                 <button class="increase-quantity">+</button>
             </div>
             <button class="remove-item" style="background-color: #ff3333; color: white; border: none; padding: 8px 12px; border-radius: 5px; margin-left: 10px; cursor: pointer;">
@@ -126,7 +125,7 @@ function setupCartEventListeners() {
 
 function updateCartItemQuantity(itemId, quantity) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const itemIndex = cart.findIndex(item => item.id == itemId);
+    const itemIndex = cart.findIndex(item => item.cdItemPedido == itemId);
     
     if (itemIndex !== -1) {
         cart[itemIndex].quantity = quantity;
@@ -137,7 +136,7 @@ function updateCartItemQuantity(itemId, quantity) {
 
 function removeCartItem(itemId) {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cart = cart.filter(item => item.id != itemId);
+    cart = cart.filter(item => item.cdItemPedido != itemId);
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
@@ -145,7 +144,7 @@ function updateCartTotals() {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     const subtotal = cart.reduce((total, item) => {
-        return total + (item.preco * item.quantity);
+        return total + (item.vlUnitario * item.qtPedido);
     }, 0);
 
     const discount = subtotal * 0.1;
@@ -222,9 +221,9 @@ function processCheckout() {
     const orderData = {
         clienteId: parseInt(userId),
         itens: cart.map(item => ({
-            produtoId: parseInt(item.id),
-            quantidade: parseInt(item.quantity),
-            precoUnitario: typeof item.preco === 'object' ? item.preco : Number(item.preco)
+            produtoId: parseInt(item.cdItemPedido),
+            quantidade: parseInt(item.qtPedido),
+            precoUnitario: typeof item.vlUnitario === 'object' ? item.vlUnitario : Number(item.vlUnitario)
         })),
         cepEntrega: cepInput ? cepInput.value : '',
         enderecoEntrega: ''
@@ -287,7 +286,7 @@ function saveToOrderHistory(orderData) {
         date: new Date().toISOString(),
         clienteId: orderData.clienteId,
         itens: orderData.itens,
-        total: orderData.itens.reduce((total, item) => total + (item.precoUnitario * item.quantidade), 0),
+        total: orderData.itens.reduce((total, item) => total + (item.vlUnitario * item.qtPedido), 0),
         status: 'Processando'
     };
 

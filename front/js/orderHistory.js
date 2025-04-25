@@ -57,9 +57,9 @@ function displayOrderHistory(pedidos) {
         const orderElement = document.createElement('div');
         orderElement.className = 'compra';
 
-        const orderId = order.id || order.id;
+        const orderId = order.cdPedido || order.cdPedido;
         const orderDate = order.dataHora ? new Date(order.dataHora) : new Date(order.date);
-        const orderTotal = order.valorTotal || order.total;
+        const orderTotal = order.vlTotal || order.total;
         const orderStatus = order.status || order.status;
         
         orderElement.setAttribute('data-order-id', orderId);
@@ -97,9 +97,9 @@ function showOrderDetails(order) {
     modal.style.alignItems = 'center';
     modal.style.zIndex = '1000';
 
-    const orderId = order.id || order.id;
+    const orderId = order.cdPedido || order.cdPedido;
     const orderDate = order.dataHora ? new Date(order.dataHora) : new Date(order.date);
-    const orderTotal = order.valorTotal || order.total;
+    const orderTotal = order.vlTotal || order.total;
     const orderStatus = order.status || order.status;
     const orderItems = order.itens || order.itens;
 
@@ -185,25 +185,25 @@ function displayOrderItems(items, container) {
         let productId, productName, quantity, price;
         
         if (isBackendFormat) {
-            productId = item.produto.id;
-            productName = item.produto.nome;
-            quantity = item.quantidade;
-            price = item.precoUnitario;
+            productId = item.produto.cdProduto;
+            productName = item.produto.nmProduto;
+            quantity = item.qtPedido;
+            price = item.vlUnitario;
         } else {
-            productId = item.produtoId;
-            quantity = item.quantidade;
-            price = item.precoUnitario;
+            productId = item.pedido;
+            quantity = item.qtPedido;
+            price = item.vlUnitario;
 
             const mockProducts = [
-                { id: 1, nome: 'Notebook Gamer XYZ' },
-                { id: 2, nome: 'Mouse Gamer RGB' },
-                { id: 3, nome: 'Teclado Mecânico LED' },
-                { id: 4, nome: 'Headset 7.1 Surround' }
+                { id: 1, nmProduto: 'Notebook Gamer XYZ' },
+                { id: 2, nmProduto: 'Mouse Gamer RGB' },
+                { id: 3, nmProduto: 'Teclado Mecânico LED' },
+                { id: 4, nmProduto: 'Headset 7.1 Surround' }
             ];
             
             const matchedProduct = mockProducts.find(p => p.id == productId);
             if (matchedProduct) {
-                productName = matchedProduct.nome;
+                productName = matchedProduct.nmProduto;
             } else {
                 productName = `Produto ${productId}`;
             }
@@ -232,8 +232,8 @@ function displayOrderItems(items, container) {
     
     let total = 0;
     items.forEach(item => {
-        const price = isBackendFormat ? item.precoUnitario : item.precoUnitario;
-        const quantity = isBackendFormat ? item.quantidade : item.quantidade;
+        const price = isBackendFormat ? item.vlUnitario : item.vlUnitario;
+        const quantity = isBackendFormat ? item.qtPedido : item.qtPedido;
         total += price * quantity;
     });
     

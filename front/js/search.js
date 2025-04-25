@@ -224,17 +224,17 @@ function exibirResultadosPesquisa(produtos, termo, dadosSimulados = false) {
 
         // Adicionar imagem do produto se disponível
         const imageHtml = product.imagemPrincipal ? 
-            `<img src="${product.imagemPrincipal}" alt="${product.nome}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
-            `<h4 style="color: #4088f4;">${product.nome}</h4>`;
+            `<img src="${product.imagemPrincipal}" alt="${product.nmProduto}" style="max-width: 100%; max-height: 150px; object-fit: contain;">` : 
+            `<h4 style="color: #4088f4;">${product.nmProduto}</h4>`;
 
         productCard.innerHTML = `
             <div style="height: 150px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
                 ${imageHtml}
             </div>
-            <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nome}</h3>
-            <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.precoAntigo)}</p>
-            <p style="font-size: 20px; color: #e60000; margin: 5px 0;">R$${formatPrice(product.precoAtual)}</p>
-            <button class="btn btn-primary view-product" data-id="${product.id}" style="background-color: #4088f4; border-color: #4088f4; width: 100%; margin-top: 10px;">Ver Produto</button>
+            <h3 style="font-size: 18px; color: #4088f4; margin-bottom: 10px;">${product.nmProduto}</h3>
+            <p style="text-decoration: line-through; color: #888; margin: 5px 0;">R$${formatPrice(product.vlAntigo)}</p>
+            <p style="font-size: 20px; color: #e60000; margin: 5px 0;">R$${formatPrice(product.vlProduto)}</p>
+            <button class="btn btn-primary view-product" data-id="${product.cdProduto}" style="background-color: #4088f4; border-color: #4088f4; width: 100%; margin-top: 10px;">Ver Produto</button>
         `;
 
         productsGrid.appendChild(productCard);

@@ -1,12 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Verificar se está logado como admin
     const isAdminLoggedIn = localStorage.getItem('isAdminLoggedIn') === 'true';
     if (!isAdminLoggedIn) {
         window.location.href = 'adminProdutos.html';
         return;
     }
 
-    // Configurar logout
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
@@ -15,10 +13,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Carregar lista de produtos
     loadProductsList();
 
-    // Configurar formulário
     const productForm = document.getElementById('productForm');
     if (productForm) {
         productForm.addEventListener('submit', function(e) {
@@ -27,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Configurar botão cancelar
     const cancelBtn = document.getElementById('cancelBtn');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', resetForm);
@@ -53,8 +48,7 @@ function loadProductsList() {
         .catch(error => {
             console.error('Erro ao carregar produtos:', error);
             showNotification('Erro ao carregar produtos. Verifique a conexão com o servidor.', 'error');
-            
-            // Em caso de falha, mostrar produtos de exemplo
+
             productsList.innerHTML = '<tr><td colspan="7" class="text-center">Não foi possível carregar os produtos do servidor.</td></tr>';
         });
 }
@@ -72,8 +66,7 @@ function displayProducts(products) {
 
     products.forEach(product => {
         const row = document.createElement('tr');
-        
-        // Miniatura da imagem para visualização na lista
+
         const imageThumbnail = product.imagemPrincipal ? 
             `<img src="${product.imagemPrincipal}" alt="${product.nmProduto}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">` : 
             '<span class="text-muted">Sem imagem</span>';
@@ -103,7 +96,6 @@ function displayProducts(products) {
         productsList.appendChild(row);
     });
 
-    // Adicionar event listeners para os botões de edição
     document.querySelectorAll('.edit-btn').forEach(button => {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
@@ -111,7 +103,6 @@ function displayProducts(products) {
         });
     });
 
-    // Adicionar event listeners para os botões de exclusão
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-id');
@@ -131,7 +122,6 @@ function editProduct(productId) {
             return response.json();
         })
         .then(product => {
-            // Preencher o formulário com os dados do produto
             document.getElementById('productId').value = product.cdProduto;
             document.getElementById('productName').value = product.nmProduto;
             document.getElementById('productDescription').value = product.dsProduto;
@@ -142,12 +132,10 @@ function editProduct(productId) {
             document.getElementById('productImage').value = product.imagemPrincipal;
             document.getElementById('productFeatured').checked = product.destaque;
 
-            // Atualizar o título do formulário e mostrar o botão cancelar
             document.getElementById('formTitle').innerHTML = '<i class="bi bi-pencil-square"></i> Editar Produto';
             document.getElementById('saveBtn').textContent = 'Atualizar Produto';
             document.getElementById('cancelBtn').style.display = 'block';
-            
-            // Adicionar preview da imagem se disponível
+
             const imagePreviewContainer = document.createElement('div');
             imagePreviewContainer.id = 'imagePreview';
             imagePreviewContainer.className = 'mt-2 mb-3';
@@ -158,8 +146,7 @@ function editProduct(productId) {
                     <img src="${product.imagemPrincipal}" alt="${product.nmProduto}" 
                          style="max-width: 100%; max-height: 150px; border: 1px solid #ddd; border-radius: 4px;">
                 `;
-                
-                // Inserir após o campo de imagem
+
                 const imageField = document.getElementById('productImage').parentNode;
                 if (!document.getElementById('imagePreview')) {
                     imageField.appendChild(imagePreviewContainer);
@@ -167,8 +154,7 @@ function editProduct(productId) {
                     document.getElementById('imagePreview').innerHTML = imagePreviewContainer.innerHTML;
                 }
             }
-            
-            // Rolar até o formulário
+
             document.getElementById('productForm').scrollIntoView({ behavior: 'smooth' });
         })
         .catch(error => {
@@ -209,11 +195,10 @@ function saveProduct() {
         dsEstoque: parseInt(document.getElementById('productStock').value),
         dsCategoria: document.getElementById('productCategory').value,
         imagemPrincipal: document.getElementById('productImage').value,
-        imagensGaleria: [], // Campo vazio para novas imagens
+        imagensGaleria: [],
         destaque: document.getElementById('productFeatured').checked
     };
 
-    // Validar a URL da imagem
     if (productData.imagemPrincipal && !isValidImageUrl(productData.imagemPrincipal)) {
         if (!confirm('A URL da imagem parece inválida. Deseja continuar mesmo assim?')) {
             return;
@@ -260,8 +245,7 @@ function resetForm() {
     document.getElementById('formTitle').innerHTML = '<i class="bi bi-plus-circle"></i> Adicionar Produto';
     document.getElementById('saveBtn').textContent = 'Salvar Produto';
     document.getElementById('cancelBtn').style.display = 'none';
-    
-    // Remover preview da imagem se existir
+
     const imagePreview = document.getElementById('imagePreview');
     if (imagePreview) {
         imagePreview.remove();
@@ -277,7 +261,6 @@ function showNotification(message, type) {
     notification.classList.add(`notification-${type}`);
     notification.style.display = 'block';
 
-    // Esconder a notificação após 5 segundos
     setTimeout(() => {
         notification.style.display = 'none';
     }, 5000);
@@ -293,14 +276,14 @@ function formatPrice(price) {
 }
 
 function isValidImageUrl(url) {
-    // Verificação básica para URLs de imagem
+
     return url.match(/\.(jpeg|jpg|gif|png|webp)$/) !== null || 
            url.startsWith('http') || 
            url.startsWith('https') || 
            url.startsWith('/');
 }
 
-// Adicionar listener para preview de imagem durante digitação
+
 document.addEventListener('DOMContentLoaded', function() {
     const imageInput = document.getElementById('productImage');
     if (imageInput) {
